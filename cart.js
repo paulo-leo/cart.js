@@ -126,6 +126,20 @@ CART.total = function (cupomDiscount = 0) {
   total - parseFloat(cupomDiscount);
   return { subtotal: subtotal, total: total, totalQtd: qtd, totalTaxa: taxa, totalDiscount: discount, totalItems: items };
 };
+
+/*Conta quantos produtos existem de um determinado tipo*/
+CART.countType = function (valueType) {
+  let total = 0;
+  let obj = CART.getObject();
+  for (let item in obj) {
+    if(obj[item].type == valueType)
+    {
+       total++;
+    }
+  }
+  return total;
+};
+
 /*Remove um item do carrinho pelo seu ID. Retorna os dados do item removido*/
 CART.removeItem = function (id) {
   if (CART.checkItem(id)) {
