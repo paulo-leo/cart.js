@@ -124,7 +124,7 @@ CART.total = function (cupomDiscount = 0) {
   }
 
   let subtotal = total;
-  total - parseFloat(cupomDiscount);
+  total = total - parseFloat(cupomDiscount);
   return { subtotal: subtotal, total: total, totalQtd: qtd, totalTaxa: taxa, totalDiscount: discount, totalItems: items };
 };
 
@@ -177,4 +177,5 @@ CART.getItemObj = function (id, key = undefined) {
 CART.removeCart = function () {
   CART.setCart({});
 };
+
 //export default CART;
