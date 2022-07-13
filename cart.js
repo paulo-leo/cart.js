@@ -1,4 +1,4 @@
-/*Lib mxxxxxxxxxxxxx*/
+/*Biblioteca JavaScript para criação de carrinho de compras criptografado no lado do servidor*/
 const CART = {};
 CART.name = 'x_____XXX__cart_sales_ecommerce___xx';
 CART.utf8_to_b64 = function (str) {
@@ -13,6 +13,7 @@ CART.setCart = function (cart) {
   localStorage.removeItem(CART.name);
   localStorage.setItem(CART.name, save);
 };
+/*Verifica se o carrinho existe*/
 CART.hasCart = function () {
   return localStorage.getItem(CART.name) ? true : false;
 };
@@ -26,7 +27,6 @@ CART.getObject = function () {
 };
 /*Retona um array com dados de todo o carrinho*/
 CART.getCart = function (json = false) {
-  let total = 0;
   let obj = CART.getObject();
   let obj2 = [];
   for (let item in obj) {
@@ -83,7 +83,7 @@ CART.addItem = function (values) {
   let address = values.address !== undefined ? values.address : '';
   let description = values.description !== undefined ? values.description : '';
   if (qtd >= 1 && !CART.checkItem(id)) {
-    let amount = (price * qtd + taxa) - discount;
+    let amount = price * qtd + taxa - discount;
     let obj = CART.getObject();
     obj[id] = {
       id: id,
@@ -99,7 +99,7 @@ CART.addItem = function (values) {
       amount: amount,
       address: address,
       type: type,
-      objs: objs
+      objs: objs,
     };
     CART.setCart(obj);
     return true;
@@ -116,7 +116,7 @@ CART.total = function (cupomDiscount = 0) {
   let discount = 0;
   let obj = CART.getObject();
   for (let item in obj) {
-    total += parseFloat(obj[item].amount);
+    total += parseFloat(obj[item].amount * obj[item].qtd); //adiciona total de cada pedido
     qtd += parseInt(obj[item].qtd);
     taxa += parseFloat(obj[item].taxa);
     discount += parseFloat(obj[item].discount);
@@ -133,9 +133,8 @@ CART.countType = function (valueType) {
   let total = 0;
   let obj = CART.getObject();
   for (let item in obj) {
-    if(obj[item].type == valueType)
-    {
-       total++;
+    if (obj[item].type === valueType) {
+      total++;
     }
   }
   return total;
@@ -178,4 +177,5 @@ CART.removeCart = function () {
   CART.setCart({});
 };
 
-//export default CART;
+//Comente a última linha caso o uso não seja diretamente na web sem exportação.
+export default CART;
