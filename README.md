@@ -1,38 +1,14 @@
+# CartJS
+
+O CartJS é uma pequena biblioteca desenvolvida em JavaScript com o objetivo de criar e gerenciar um carrinho de compras  utilizando a API LocalStorage. O carrinho é armazenada de forma criptografada para dificultar o acesso e manipulação direta dos itens por meio de um usuário mais avançado.  A biblioteca tem um jeito muito simples de ser utilizada, pois o seu funcionamento se baseia no conceito de objetos do javaScript. 
+
+
+
 #### bool CART.hasCart()
 
 Verifica  se o carrinho existe.  
 
-
-
-#### object| json CART.getCart(bool json =  false)
-
-Retorna um array com dados de todo o carrinho. Se o parâmetro for igual a true, o tipo de retorno será JSON ao invés do objeto do JavaScript.
-
-
-
-#### bool | object CART.checkItem(string id = null)
-
-Verifica se o item existe por meio do ID do item. Caso não seja informado um id no parâmetro da função será retornado um objeto JavaScript dos itens. 
-
-
-
-#### void CART.increaseItem(string id, int qtd = 1)
-
-Modifica a quantidade do itens para mais. 
-
-id  =  identificador do item.
-
-qtd = quantidade a ser adicionada. 
-
-
-
-#### void CART.decreaseItem(string id, qtd = 1)
-
-Modifica a quantidade de itens para menos, porém quando o item chega a um total de 0 ele será deletado do carrinho de compras automaticamente.
-
-id  =  identificador do item.
-
-qtd = quantidade a ser removida. 
+------
 
 
 
@@ -60,6 +36,58 @@ Abaixo segue a tabela com os campos que devem ser passados no parâmetro "values
 
 
 
+------
+
+
+
+#### object| json CART.getCart(bool json =  false)
+
+Retorna um array com dados de todo o carrinho. Se o parâmetro for igual a true, o tipo de retorno será JSON ao invés do objeto do JavaScript.
+
+
+
+------
+
+
+
+#### bool | object CART.checkItem(string id = null)
+
+Verifica se o item existe por meio do ID do item. Caso não seja informado um id no parâmetro da função será retornado um objeto JavaScript dos itens. 
+
+
+
+------
+
+
+
+#### void CART.increaseItem(string id, int qtd = 1)
+
+Modifica a quantidade do itens para mais. 
+
+id  =  identificador do item.
+
+qtd = quantidade a ser adicionada. 
+
+
+
+------
+
+
+
+#### void CART.decreaseItem(string id, qtd = 1)
+
+Modifica a quantidade de itens para menos, porém quando o item chega a um total de 0 ele será deletado do carrinho de compras automaticamente.
+
+id  =  identificador do item.
+
+qtd = quantidade a ser removida. 
+
+
+
+------
+
+
+
 #### object  CART.getItemObj(string id, key = null) 
 
 Retorna os objetos criados no campo "objs" na adição de um item. 
@@ -72,9 +100,17 @@ key = campo a ser recuperado, caso não informado será retornado todos os campo
 
 
 
+------
+
+
+
 #### object | bool = false CART.getItem(string id) 
 
 Retorna os dados de um item do carrinho de compras por meio de seu ID.
+
+
+
+------
 
 
 
@@ -94,15 +130,27 @@ discount = total de desconto
 
 
 
+------
+
+
+
 #### int CART.countType(string type)
 
 Conta quantos produtos existem de um determinado tipo
 
 
 
+------
+
+
+
 #### void | object CART.removeItem(string id)
 
 Remove um item do carrinho pelo seu ID. Retorna os dados do item removido.
+
+
+
+------
 
 
 
