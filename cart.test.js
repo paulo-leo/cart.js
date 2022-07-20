@@ -27,7 +27,7 @@ test("Descontar porcentagem do total", () => {
   expect(newTotal).toBe(previousTotal - previousTotal * (amount / 100));
 });
 
-test("teste Descontar valor de produtos especificos", () => {
+test("Descontar valor de produtos especificos", () => {
   const oldObj = { ...CART.getObject() };
   const discount = 50;
   const ids = [{ id: "aaa-0" }, { id: "aaa-2" }];
@@ -44,7 +44,7 @@ test("teste Descontar valor de produtos especificos", () => {
   }
 });
 
-test("teste Descontar porcentagem de produtos especificos", () => {
+test("Descontar porcentagem de produtos especificos", () => {
   const oldObj = { ...CART.getObject() };
   const discount = 50;
   const ids = [{ id: "aaa-0" }, { id: "aaa-2" }];
