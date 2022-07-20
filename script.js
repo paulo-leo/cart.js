@@ -56,12 +56,9 @@ const Counter = {
     },
     applyDiscount: function () {
       CART.discount(10, 2);
-      // console.log(CART.getCart());
     },
   },
 };
-
-console.log(CART.getCart());
 
 const app = Vue.createApp(Counter);
 

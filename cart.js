@@ -121,7 +121,7 @@ CART.total = function (cupomDiscount = 0) {
   let discount = 0;
   let obj = CART.getObject();
   for (let item in obj) {
-    total += parseFloat(obj[item].amount * obj[item].qtd); //adiciona total de cada pedido
+    total += parseFloat(obj[item].amount); //adiciona total de cada pedido
     qtd += parseInt(obj[item].qtd);
     taxa += parseFloat(obj[item].taxa);
     discount += parseFloat(obj[item].discount);
@@ -210,10 +210,10 @@ CART.discount = function (amount, type = 1, arr = []) {
     for (let item of cart) {
       let discountOnItem = 0;
       if (discount > 0 && item.amount > 0) {
-        discountOnItem = CART.discountOnItem(discount, item.amount, item.qtd);
+        discountOnItem = CART.discountOnItem(discount, item.amount);
         item.amount -= discountOnItem;
         item.discount += discountOnItem;
-        if (discount <= item.amount) discount -= discountOnItem;
+        discount -= discountOnItem;
       }
 
       if (item.amount < 0) item.amount = 0;
@@ -228,11 +228,11 @@ CART.discount = function (amount, type = 1, arr = []) {
         if (type === 1) discount = cart[index].amount * (amount / 100);
         const discountOnItem = CART.discountOnItem(
           discount,
-          cart[index].amount,
-          cart[index].qtd
+          cart[index].amount
         );
         cart[index].amount -= discountOnItem;
         cart[index].discount += discountOnItem;
+        if (cart[index].amount < 0) cart[index].amount = 0;
         obj[cart[index].id] = cart[index];
       }
     }
@@ -241,8 +241,8 @@ CART.discount = function (amount, type = 1, arr = []) {
   CART.setCart(obj);
 };
 // Calcula o valor do desconto que será aplicado em um item
-CART.discountOnItem = function (discount, amount, qtd) {
-  return discount <= amount ? discount / qtd : discount;
+CART.discountOnItem = function (discount, amount) {
+  return discount <= amount ? discount : amount;
 };
 // Remove o desconto de todos os itens
 CART.removeDiscountAll = function () {
@@ -258,3 +258,4 @@ CART.removeDiscountAll = function () {
 
 //Comente a última linha caso o uso não seja diretamente na web sem exportação.
 // export default CART;
+module.exports = CART;
