@@ -1,6 +1,6 @@
 /*Biblioteca JavaScript para criação de carrinho de compras criptografado no lado do servidor*/
 const CART = {};
-CART.name = 'x_____XXX__cart_sales_ecommerce___xx';
+CART.name = "x_____XXX__cart_sales_ecommerce___xx";
 CART.utf8_to_b64 = function (str) {
   return window.btoa(unescape(encodeURIComponent(str)));
 };
@@ -47,43 +47,48 @@ CART.checkItem = function (id = null) {
 CART.increaseItem = function (id = null, qtd = 1) {
   let item = CART.getItem(id);
   if (item) {
-    item['qtd'] = item.qtd + qtd;
-    delete item['amount'];
+    item["qtd"] = item.qtd + qtd;
+    delete item["amount"];
     CART.removeItem(id);
     CART.addItem(item);
+    CART.removeDiscountAll();
   }
 };
 /*Modifica a quantidade de itens para mais menos, quando o tem chega a 0 ele é deletado do carrinho de compras automaticamente*/
 CART.decreaseItem = function (id = null, qtd = 1) {
   let item = CART.getItem(id);
   if (item) {
-    item['qtd'] = item.qtd - qtd;
-    delete item['amount'];
-    if (item['qtd'] === 0) {
+    item["qtd"] = item.qtd - qtd;
+    delete item["amount"];
+    if (item["qtd"] === 0) {
       CART.removeItem(id);
     } else {
       CART.removeItem(id);
       CART.addItem(item);
     }
+
+    CART.removeDiscountAll();
   }
 };
 /*Adiciona item no carrinho*/
 CART.addItem = function (values) {
+  CART.removeDiscountAll();
   let id = values.id;
   let name = values.name;
   let price = parseFloat(values.price);
   let qtd = values.qtd !== undefined ? parseInt(values.qtd) : 1;
-  let discount = values.discount !== undefined ? parseFloat(values.discount) : 0;
+  let discount =
+    values.discount !== undefined ? parseFloat(values.discount) : 0;
   let taxa = values.taxa !== undefined ? parseFloat(values.taxa) : 0;
   let type = values.type !== undefined ? values.type : 1;
-  let code = values.code !== undefined ? values.code : '';
+  let code = values.code !== undefined ? values.code : "";
   let objs = values.objs !== undefined ? values.objs : {};
-  let img = values.img !== undefined ? values.img : '';
+  let img = values.img !== undefined ? values.img : "";
   let interval = values.interval !== undefined ? values.interval : 0;
-  let address = values.address !== undefined ? values.address : '';
-  let description = values.description !== undefined ? values.description : '';
+  let address = values.address !== undefined ? values.address : "";
+  let description = values.description !== undefined ? values.description : "";
   if (qtd >= 1 && !CART.checkItem(id)) {
-    let amount = price * qtd + taxa - discount;
+    let amount = price * qtd + taxa;
     let obj = CART.getObject();
     obj[id] = {
       id: id,
@@ -116,7 +121,7 @@ CART.total = function (cupomDiscount = 0) {
   let discount = 0;
   let obj = CART.getObject();
   for (let item in obj) {
-    total += parseFloat(obj[item].amount * obj[item].qtd); //adiciona total de cada pedido
+    total += parseFloat(obj[item].amount); //adiciona total de cada pedido
     qtd += parseInt(obj[item].qtd);
     taxa += parseFloat(obj[item].taxa);
     discount += parseFloat(obj[item].discount);
@@ -125,7 +130,14 @@ CART.total = function (cupomDiscount = 0) {
 
   let subtotal = total;
   total = total - parseFloat(cupomDiscount);
-  return { subtotal: subtotal, total: total, totalQtd: qtd, totalTaxa: taxa, totalDiscount: discount, totalItems: items };
+  return {
+    subtotal: subtotal,
+    total: total,
+    totalQtd: qtd,
+    totalTaxa: taxa,
+    totalDiscount: discount,
+    totalItems: items,
+  };
 };
 
 /*Conta quantos produtos existem de um determinado tipo*/
@@ -177,5 +189,73 @@ CART.removeCart = function () {
   CART.setCart({});
 };
 
+CART.getItemIndex = function (id) {
+  return CART.getCart().findIndex((e) => e.id === id);
+};
+// Aplica desconto no carrinho ou apenas em itens especificos
+// itens especificos devem ser informados em um array no terceiro parametro da função
+// o formato do array é: [{id: x}, {id: y}, {id: z}...]
+// o comportamento padrão da função é de dividir o desconto entre todos os itens do carrinho
+// porém se um array de itens é informado o valor é aplicado apenas nos itens especificos
+CART.discount = function (amount, type = 1, arr = []) {
+  const cart = CART.getCart();
+  const obj = CART.getObject();
+  const total = CART.total().subtotal;
+  let discount = 0;
+
+  if (type === 1) discount = total * (amount / 100);
+  else discount = amount;
+
+  if (arr.length === 0) {
+    for (let item of cart) {
+      let discountOnItem = 0;
+      if (discount > 0 && item.amount > 0) {
+        discountOnItem = CART.discountOnItem(discount, item.amount);
+        item.amount -= discountOnItem;
+        item.discount += discountOnItem;
+        discount -= discountOnItem;
+      }
+
+      if (item.amount < 0) item.amount = 0;
+
+      obj[item.id] = item;
+    }
+  } else {
+    for (let item of arr) {
+      const index = CART.getItemIndex(item.id);
+
+      if (index !== -1) {
+        if (type === 1) discount = cart[index].amount * (amount / 100);
+        const discountOnItem = CART.discountOnItem(
+          discount,
+          cart[index].amount
+        );
+        cart[index].amount -= discountOnItem;
+        cart[index].discount += discountOnItem;
+        if (cart[index].amount < 0) cart[index].amount = 0;
+        obj[cart[index].id] = cart[index];
+      }
+    }
+  }
+
+  CART.setCart(obj);
+};
+// Calcula o valor do desconto que será aplicado em um item
+CART.discountOnItem = function (discount, amount) {
+  return discount <= amount ? discount : amount;
+};
+// Remove o desconto de todos os itens
+CART.removeDiscountAll = function () {
+  const cart = CART.getObject();
+
+  for (let key in cart) {
+    cart[key].amount = cart[key].price * cart[key].qtd + cart[key].taxa;
+    cart[key].discount = 0;
+  }
+
+  CART.setCart(cart);
+};
+
 //Comente a última linha caso o uso não seja diretamente na web sem exportação.
-export default CART;
+// export default CART;
+module.exports = CART;

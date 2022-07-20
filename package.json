@@ -1,0 +1,27 @@
+{
+  "type": "module",
+  "name": "cart",
+  "version": "1.0.0",
+  "description": "O CartJS é uma pequena biblioteca desenvolvida em JavaScript com o objetivo de criar e gerenciar um carrinho de compras  utilizando a API LocalStorage. O carrinho é armazenada de forma criptografada para dificultar o acesso e manipulação direta dos itens por meio de um usuário mais avançado.  A biblioteca tem um jeito muito simples de ser utilizada, pois o seu funcionamento se baseia no conceito de objetos do javaScript.",
+  "main": "cart.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/a-arthur-f/cart.js.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/a-arthur-f/cart.js/issues"
+  },
+  "homepage": "https://github.com/a-arthur-f/cart.js#readme",
+  "devDependencies": {
+    "jest": "^28.1.3"
+  },
+  "dependencies": {
+    "jest-environment-jsdom": "^28.1.3"
+  }
+}
