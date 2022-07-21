@@ -203,6 +203,9 @@ CART.discount = function (amount, type = 1, arr = []) {
   const total = CART.total().subtotal;
   let discount = 0;
 
+  if (type !== 1 && type !== 2)
+    return console.error("O valor de type deve ser 1 ou 2");
+
   if (type === 1) discount = total * (amount / 100);
   else discount = amount;
 

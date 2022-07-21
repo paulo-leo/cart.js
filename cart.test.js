@@ -73,7 +73,7 @@ test("Base64: Descontar valor do total", () => {
   const previousTotal = CART.total().total;
   const discount = 10;
 
-  CART.discountFromB64(base64(discount, 10));
+  CART.discountFromB64(base64(discount, 2));
 
   const newTotal = CART.total().total;
 
