@@ -55,7 +55,7 @@ const Counter = {
       this.itensQtd = CART.total().qtd;
     },
     applyDiscount: function () {
-      CART.discount(10, 2);
+      CART.discountFromB64("ewoiYW1vdW50IjogMTAsCiJ0eXBlIjogMgp9");
     },
   },
 };

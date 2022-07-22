@@ -203,6 +203,9 @@ CART.discount = function (amount, type = 1, arr = []) {
   const total = CART.total().subtotal;
   let discount = 0;
 
+  if (type !== 1 && type !== 2)
+    return console.error("O valor de type deve ser 1 ou 2");
+
   if (type === 1) discount = total * (amount / 100);
   else discount = amount;
 
@@ -254,6 +257,24 @@ CART.removeDiscountAll = function () {
   }
 
   CART.setCart(cart);
+};
+// Aplica desconto a partir de informações de um JSON codificado em Base64
+CART.discountFromB64 = function (base64_str) {
+  if (typeof base64_str !== "string")
+    console.error("O valor informado deve ser uma string");
+
+  const obj = JSON.parse(atob(base64_str));
+
+  if (isNaN(obj.amount))
+    return console.error("O valor de amount deve ser um número");
+
+  if (isNaN(obj.type) && obj.type !== 1 && obj.type !== 2)
+    return console.error("O valor de type deve ser 1 ou 2");
+
+  if (obj.arr && !Array.isArray(obj.arr))
+    return console.error("O valor de arr deve ser um array");
+
+  CART.discount(obj.amount, obj.type, obj.arr);
 };
 
 //Comente a última linha caso o uso não seja diretamente na web sem exportação.
