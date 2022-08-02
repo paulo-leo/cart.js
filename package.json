@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/a-arthur-f/cart.js.git"
+    "url": "https://github.com/paulo-leo/cart.js.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Paulo Leonardo da Silva Cassimiro",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/a-arthur-f/cart.js/issues"
+    "url": "https://github.com/paulo-leo/cart.js/issues"
   },
-  "homepage": "https://github.com/a-arthur-f/cart.js#readme",
+  "homepage": "https://github.com/paulo-leo",
   "devDependencies": {
     "jest": "^28.1.3"
   },

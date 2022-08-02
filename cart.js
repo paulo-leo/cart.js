@@ -1,4 +1,4 @@
-/*Biblioteca JavaScript para criação de carrinho de compras criptografado no lado do servidor*/
+/*Biblioteca JavaScript para criação de carrinho de compras criptografado no lado do cliente*/
 const CART = {};
 CART.name = "x_____XXX__cart_sales_ecommerce___xx";
 CART.utf8_to_b64 = function (str) {
