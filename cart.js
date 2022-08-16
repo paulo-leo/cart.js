@@ -264,17 +264,18 @@ CART.discountFromB64 = function (base64_str) {
     console.error("O valor informado deve ser uma string");
 
   const obj = JSON.parse(atob(base64_str));
+  const { type, amount, arr } = obj;
 
-  if (isNaN(obj.amount))
+  if (isNaN(amount))
     return console.error("O valor de amount deve ser um número");
 
-  if (isNaN(obj.type) && obj.type !== 1 && obj.type !== 2)
+  if (isNaN(type) && type !== 1 && type !== 2)
     return console.error("O valor de type deve ser 1 ou 2");
 
-  if (obj.arr && !Array.isArray(obj.arr))
+  if (arr && !Array.isArray(arr))
     return console.error("O valor de arr deve ser um array");
 
-  CART.discount(obj.amount, obj.type, obj.arr);
+  CART.discount(Number(amount), Number(type), arr);
 };
 
 //Comente a última linha caso o uso não seja diretamente na web sem exportação.
