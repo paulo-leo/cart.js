@@ -1,6 +1,6 @@
 # CartJS
 
-O CartJS é uma pequena biblioteca desenvolvida em JavaScript com o objetivo de criar e gerenciar um carrinho de compras utilizando a API LocalStorage. O carrinho é armazenada de forma criptografada para dificultar o acesso e manipulação direta dos itens por meio de um usuário mais avançado. A biblioteca tem um jeito muito simples de ser utilizada, pois o seu funcionamento se baseia no conceito de objetos do javaScript.
+O CartJS representa uma compacta biblioteca em JavaScript, concebida para a criação e administração eficiente de carrinhos de compras via a API LocalStorage. O carrinho é criptografado para restringir o acesso e a manipulação direta de itens por usuários avançados. A biblioteca adota uma abordagem descomplicada, operando com a simplicidade dos objetos JavaScript.
 
 #### bool CART.hasCart()
 
